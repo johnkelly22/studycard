@@ -22,8 +22,8 @@ def generate_flashcards(text, num=10):
     """
     return prompt
 
-api_key = os.getenv('AI_API_KEY')
-client = genai.Client(api_key)
+key = os.getenv('AI_API_KEY')
+client = genai.Client(api_key=key)
 
 response = client.models.generate_content(
     model="gemini-2.0-flash-lite",
