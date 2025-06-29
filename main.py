@@ -35,7 +35,10 @@ def upload_pdf():
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No file selected'}), 400
-    
+
+    # Try to get the `num` parameter from the form data
+    num = request.form.get('num', default=5, type=int)
+
     # Save the uploaded file temporarily
     temp_path = f"/tmp/{file.filename}"
     file.save(temp_path)
@@ -44,16 +47,14 @@ def upload_pdf():
     text = extract_text_from_pdf(temp_path)
 
     # Call Gemini API to generate flashcards
-    prompt = generate_flashcards(text, num=5)
+    prompt = generate_flashcards(text, num=num)
     response = client.models.generate_content(
         model="gemini-2.0-flash-lite",
         contents=prompt
     )
-    
-    # Remove the temp file (optional, but good practice)
+
     os.remove(temp_path)
 
-    # Return generated text as JSON
     return jsonify({'flashcards': response.text})
 
 if __name__ == '__main__':
