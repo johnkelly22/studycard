@@ -54,8 +54,20 @@ def upload_pdf():
     )
 
     os.remove(temp_path)
+    
+    flashcards = parse_flashcards(response.text)
+    return jsonify({'flashcards': flashcards})
 
-    return jsonify({'flashcards': response.text})
+
+def parse_flashcards(raw_text):
+    flashcards = []
+    lines = raw_text.strip().split("\n")
+    for i in range(0, len(lines), 2):
+        if i+1 < len(lines) and lines[i].startswith("Q:") and lines[i+1].startswith("A:"):
+            question = lines[i][2:].strip()
+            answer = lines[i+1][2:].strip()
+            flashcards.append({'q': question, 'a': answer})
+    return flashcards
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
