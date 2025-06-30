@@ -18,13 +18,25 @@ def extract_text_from_pdf(file_path):
     return text
 
 def generate_flashcards(text, num=10):
-    prompt = f"""Please read the following text and create EXACTLY {num} flashcard(s) in this format. Do not generate any additional text or explanations. Each flashcard should have a question and an answer, and they should be separated by exactly one newline:
-Q: question
-A: answer
+    prompt = f"""
+    You are an expert flashcard generator.
 
-TEXT:
-{text}
-"""
+    Please create exactly {num} flashcards based on the text below.
+
+    Each flashcard must have a question and an answer, formatted exactly as:
+
+    Q: [question text]
+    A: [answer text]
+
+    Do NOT add any explanations or extra text.
+
+    Here is the text to use:
+
+    {text}
+
+    Generate the flashcards now.
+    """
+
     return prompt
 
 key = os.getenv('AI_API_KEY')
