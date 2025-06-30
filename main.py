@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pdfplumber
 import google.genai as genai
 import os
@@ -7,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()  # Load environment variables from .env file
 
 app = Flask(__name__)
+CORS(app)
 
 def extract_text_from_pdf(file_path):
     text = ""
@@ -54,7 +56,7 @@ def upload_pdf():
     )
 
     os.remove(temp_path)
-    
+
     flashcards = parse_flashcards(response.text)
     return jsonify({'flashcards': flashcards})
 
