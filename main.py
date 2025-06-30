@@ -75,12 +75,15 @@ def upload_pdf():
 
 def parse_flashcards(raw_text):
     flashcards = []
-    lines = raw_text.strip().split("\n")
-    for i in range(0, len(lines), 2):
-        if i+1 < len(lines) and lines[i].startswith("Q:") and lines[i+1].startswith("A:"):
-            question = lines[i][2:].strip()
-            answer = lines[i+1][2:].strip()
+    lines = [line.strip() for line in raw_text.strip().split("\n") if line.strip()]  # remove empty lines
+    question = None
+    for line in lines:
+        if line.startswith("Q:"):
+            question = line[2:].strip()
+        elif line.startswith("A:") and question is not None:
+            answer = line[2:].strip()
             flashcards.append({'q': question, 'a': answer})
+            question = None
     return flashcards
 
 if __name__ == '__main__':

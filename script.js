@@ -8,7 +8,8 @@ function updateCard() {
   document.getElementById("cardContent").textContent = isFlipped ? flashcards[index].a : flashcards[index].q;
 
   // Show requested number in UI (even if fewer cards received)
-  document.getElementById("cardCounter").textContent = `${index + 1} / ${requestedNumCards}`;
+  document.getElementById("cardCounter").textContent = `${index + 1} / ${flashcards.length}`;
+
 }
 
 function flipCard() {
