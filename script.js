@@ -22,8 +22,6 @@ function nextCard() {
     index++;
     isFlipped = false;
     updateCard();
-  } else {
-    alert(`Only ${flashcards.length} flashcards were generated. Can't go further.`);
   }
 }
 
@@ -60,6 +58,9 @@ async function generateFlashcards() {
 
     const data = await response.json();
     loading.style.display = "none"; // Hide loading
+    
+    const arrowButtons = document.getElementById("arrowButtons");
+    arrowButtons.style.display = "flex"; // Show navigation buttons
 
     if (data.flashcards) {
       // Limit to requested number just in case backend sends more
