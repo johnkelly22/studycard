@@ -17,7 +17,7 @@ def extract_text_from_pdf(file_path):
             text += page.extract_text() + "\n"
     return text
 
-def generate_flashcards(text, num=10):
+def generate_flashcards(text, num):
     prompt = f"""
     You are an expert flashcard generator.
 
@@ -50,7 +50,7 @@ def upload_pdf():
     if file.filename == '':
         return jsonify({'error': 'No file selected'}), 400
 
-    # Try to get the `num` parameter from the form data
+    # Try to get the num parameter from the form data
     num = request.form.get('num', default=5, type=int)
 
     # Save the uploaded file temporarily
