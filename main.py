@@ -22,7 +22,7 @@ def generate_flashcards(text, num):
     You are an expert flashcard generator.
 
     Please create exactly {num} flashcards based on the text below.
-    Ensure you created EXACTLY {num} flashcards!
+    Ensure you created EXACTLY {num} flashcards! After generating the flashcards, go back and check that you have created the correct number of flashcards.
 
     Each flashcard must have a question and an answer, formatted exactly as:
 
